@@ -1,0 +1,13 @@
+{
+	"name": "Virtual Hosts Manager",
+	"main": "index.html",
+	"window": {
+//		"toolbar": false,
+		"width": 800,
+		"height": 450,
+		"min_width": 800,
+		"min_height": 400,
+		"position": "center",
+		"show": false
+	}
+}

@@ -1,0 +1,60 @@
+<!DOCTYPE HTML>
+<html lang="en-US" ng-app="app">
+<head>
+    <meta charset="UTF-8">
+    <title>Virtual Hosts Manager</title>
+    <link rel="stylesheet" href="css/app.css"/>
+</head>
+<body>
+    <main class="container">
+
+        <!--Domains view-->
+        <section id="domains-view" ng-controller="DomainsController">
+            <!--Domains list-->
+            <ul id="domains-list">
+                <li class="menu-item"
+                    ng-repeat="domain in domains.list()"
+                    ng-class="selected(domain.id)"
+                    ng-click="edit(domain.id)">{{ domain.ServerName }} <span class="icon menu-icon">&#59230;</span></li>
+            </ul>
+
+            <!--Add domain-->
+            <div class="new" ng-click="new()">
+                <div class="menu-item">Create new domain <span class="icon menu-icon">&#10133;</span></div>
+            </div>
+        </section>
+
+        <!--Main view-->
+        <section id="main-view" ng-view></section>
+
+        <!--Status messages view-->
+        <section id="messages">
+            <ul id="messages-view" ng-controller="MessageController">
+                <li ng-repeat="message in messages" class="fade-in">{{ message }}</li>
+            </ul>
+        </section>
+
+    </main>
+
+    <!--Vendor Libraries-->
+    <script type="text/javascript" src="vendor/angular.min.js"></script>
+
+    <!--Helper Tools-->
+    <script type="text/javascript" src="js/tools.js"></script>
+
+    <!--App-->
+    <script type="text/javascript" src="js/app.js"></script>
+    
+    <!--Services-->
+    <script type="text/javascript" src="js/services/MessageService.js"></script>
+    <script type="text/javascript" src="js/services/DomainsService.js"></script>
+    <script type="text/javascript" src="js/services/ApacheService.js"></script>
+    <script type="text/javascript" src="js/services/FileService.js"></script>
+
+    <!--Controllers-->
+    <script type="text/javascript" src="js/controllers/DomainsController.js"></script>
+    <script type="text/javascript" src="js/controllers/EditController.js"></script>
+    <script type="text/javascript" src="js/controllers/NewController.js"></script>
+    <script type="text/javascript" src="js/controllers/MessageController.js"></script>
+</body>
+</html>

@@ -1,0 +1,5 @@
+{
+	"vhosts_file": "/xampp/apache/conf/extra/httpd-vhosts.conf",
+	"win_hosts_file": "/windows/system32/drivers/etc/hosts",
+	"apache_bin": "\\xampp\\apache\\bin\\httpd"
+}
