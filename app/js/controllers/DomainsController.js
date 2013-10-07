@@ -10,8 +10,6 @@ app.controller('DomainsController', function($scope, $location, DomainsService) 
 	};
 
 	$scope.selected = function(id) {
-		if($location.path() == '/edit/' + id) return 'selected';
-
-		return false;
+		return ($location.path() == '/edit/' + id) ? 'selected' : false;
 	};
 });
