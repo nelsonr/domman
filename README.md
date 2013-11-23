@@ -1,6 +1,8 @@
 domman (domain manager)
 ======
 
+![Edit](http://i.imgur.com/R1BR9hn.png)
+
 The goal is to create an utility to manage Virtual Hosts for Apache in local development.
 
 This utility aims to simplify the creation and editing of Virtual Hosts without having to go around 3 different places to do so.
