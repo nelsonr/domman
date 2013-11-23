@@ -1,5 +1,7 @@
-domman (domain manager)
+Domman (domain manager)
 ======
+
+![Edit](http://i.imgur.com/R1BR9hn.png)
 
 The goal is to create an utility to manage Virtual Hosts for Apache in local development.
 
