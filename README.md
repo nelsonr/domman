@@ -23,3 +23,13 @@ These are some of the features of Domman.
 ## Platforms
 
 Domman runs on [node-webkit](https://github.com/rogerwang/node-webkit) and the current targeted platform is Windows. Although multi-platform should not be hard to do (famous last words!).
+
+## How to run
+
+Until a build is provided, here's how to run Domman on your machine:
+
+- Download [node-webkit](https://github.com/rogerwang/node-webkit)
+- Clone this repository
+- Open the **app** folder with node-webkit
+
+**Note**: Please backup your httpd-vhosts.conf and hosts files before running Domman as it's still in development!
