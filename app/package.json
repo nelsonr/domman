@@ -1,5 +1,5 @@
 {
-	"name": "Virtual Hosts Manager",
+	"name": "Domman - Virtual Hosts Manager",
 	"main": "index.html",
 	"window": {
 //		"toolbar": false,
