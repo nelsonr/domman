@@ -48,10 +48,14 @@ app.factory('DomainsService', function(FileService) {
 
 	service.remove = function(id) {
 	    var i = 0, length = list.length;
+		var domain = service.get(id);
 
 		for(; i < length; i++) {
 			if(list[i]['id'] === id) {
-				list.pop(i);
+				list.splice(i, 1);
+				deleteVHostsFile(domain);
+				deleteHostsFile(domain);
+
 				return true;
 			}
 		}
@@ -90,7 +94,7 @@ app.factory('DomainsService', function(FileService) {
 			vhost += "\t" + attr + ' ' + attrVal + "\n";
 		}
 
-		vhost += "</VirtualHost>";
+		vhost += "</VirtualHost>\n";
 
 		FileService.append(config.vhosts_file, vhost);
 	}
@@ -105,9 +109,17 @@ app.factory('DomainsService', function(FileService) {
 		FileService.write(config.vhosts_file, editedVHostsFile);
 	}
 
+	function deleteVHostsFile(domain) {
+		var vhostsFile = FileService.read(config.vhosts_file);
+		var domainRegex = new RegExp('<VirtualHost \\*>[\\s\\w]*' + domain.ServerName + '[\\s\\S]*?<\\/VirtualHost>');
+		var editedVHostsFile = vhostsFile.replace(domainRegex, '');
+
+		FileService.write(config.vhosts_file, editedVHostsFile.trim());
+	}
+
 	function addHostsFile(domainName) {
 		if(domainName) {
-			FileService.append(config.win_hosts_file, "127.0.0.1 " + domainName);
+			FileService.append(config.win_hosts_file, "\r" + "127.0.0.1 " + domainName);
 
 			return true;
 		}
@@ -116,11 +128,16 @@ app.factory('DomainsService', function(FileService) {
 	}
 
 	function editHostsFile(currentDomainName, domainName) {
-		var hosts = FileService.read(config.win_hosts_file);
-
-		var editedHosts = hosts.replace(currentDomainName, domainName);
+		var hostsFile = FileService.read(config.win_hosts_file);
+		var editedHosts = hostsFile.replace(currentDomainName, domainName);
 
 		FileService.write(config.win_hosts_file, editedHosts);
+	}
+
+	function deleteHostsFile(domain) {
+		var hostsFile = FileService.read(config.win_hosts_file);
+
+		FileService.write(config.win_hosts_file, hostsFile.replace('127.0.0.1 ' + domain.ServerName, '').trim());
 	}
 
 	return service;
