@@ -112,9 +112,14 @@ app.factory('DomainsService', function(FileService) {
 	function deleteVHostsFile(domain) {
 		var vhostsFile = FileService.read(config.vhosts_file);
 		var domainRegex = new RegExp('<VirtualHost \\*>[\\s\\w]*' + domain.ServerName + '[\\s\\S]*?<\\/VirtualHost>');
-		var editedVHostsFile = vhostsFile.replace(domainRegex, '');
 
-		FileService.write(config.vhosts_file, editedVHostsFile.trim());
+		// remove domain
+		vhostsFile = vhostsFile.replace(domainRegex, '');
+
+		// tidy vhost file
+		vhostsFile = vhostsFile.replace('\n\n\n', '\n').trim();
+
+		FileService.write(config.vhosts_file, vhostsFile);
 	}
 
 	function addHostsFile(domainName) {
