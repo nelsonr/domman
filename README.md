@@ -13,8 +13,6 @@ To simplify the creation and management of Virtual Hosts without having to edit 
 
 ## Features
 
-These are some of the features of Domman.
-
 - Creation and editing of new and existing Virtual Hosts
 - Automatic editing of the httpd-vhosts.conf and hosts files
 - Automatic restart of the Apache service
@@ -32,4 +30,4 @@ Until a build is provided, here's how to run Domman on your machine:
 - Clone this repository
 - Open the **app** folder with node-webkit
 
-**Note**: Please backup your httpd-vhosts.conf and hosts files before running Domman as it's still in development!
+**Note**: Please backup your httpd-vhosts.conf and hosts files before running Domman, as it's still in development!
