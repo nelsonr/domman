@@ -24,7 +24,7 @@ app.controller('EditController', function($scope, $location, $routeParams, Domai
 
 	$scope.remove = function() {
 		DomainsService.remove($scope.domain.id);
-		ApacheService.restart()
+		ApacheService.restart();
 		$location.path('/new');
 	};
 
