@@ -1,12 +1,12 @@
-<div class="edit">
+<div class="edit new">
     <h2>New domain</h2>
 
     <form ng-submit="save()">
         <label for="servername">Server Name</label>
-        <input type="text" id="servername" name="servername" ng-model="domain.ServerName" value="{{ domain.ServerName }}" placeholder="Your domain name, example: domain.dev" required />
+        <input type="text" id="servername" name="servername" ng-model="domain.ServerName" value="{{ domain.ServerName }}" placeholder="Your domain name, example: domain.dev" required autofocus />
 
         <label for="docroot">Document Root</label>
-        <input type="text" id="docroot" name="docroot" ng-model="domain.DocumentRoot" value="{{ domain.DocumentRoot }}" placeholder="The path to your project folder, example: C:\xampp\htdocs\my-project" required />
+        <input type="text" id="docroot" name="docroot" ng-model="domain.DocumentRoot" value="{{ domain.DocumentRoot }}" placeholder="The path to your project folder" required />
 
         <input type="submit" value="Save"/>
     </form>
