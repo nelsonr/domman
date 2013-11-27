@@ -87,8 +87,8 @@ app.factory('DomainsService', function(FileService) {
 		for(attr in domain) {
 			attrVal = domain[attr];
 
-			if(attr === 'DocumentRoot' && attr.indexOf('"') == -1) {
-				attrVal = '"' + attrVal + '"';
+			if(attr === 'DocumentRoot') {
+				attrVal = '"' + attrVal.replace(/"/g, '') + '"';
 			}
 
 			vhost += "\t" + attr + ' ' + attrVal + "\n";
