@@ -16,6 +16,10 @@ app.controller('EditController', function($scope, $location, $routeParams, Domai
 
 	$scope.domain = clone(DomainsService.get($routeParams.id));
 
+	$scope.new = function() {
+		$location.path('/new');
+	};
+
 	$scope.save = function() {
 		DomainsService.update(clone($scope.domain));
 		MessageService.message('Domain saved');

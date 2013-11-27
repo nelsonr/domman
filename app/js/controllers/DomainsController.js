@@ -5,10 +5,6 @@ app.controller('DomainsController', function($scope, $location, DomainsService) 
 		$location.path('/edit/' + id);
 	};
 
-	$scope.new = function() {
-	    $location.path('/new');
-	};
-
 	$scope.selected = function(id) {
 		return ($location.path() == '/edit/' + id) ? 'selected' : false;
 	};
