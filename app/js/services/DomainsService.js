@@ -183,7 +183,7 @@ app.factory('DomainsService', function(FileService) {
 	 */
 	function addHost(domainName) {
 		if(domainName) {
-			FileService.append(config.win_hosts_file, "\r" + "127.0.0.1 " + domainName);
+			FileService.append(config.win_hosts_file, "\n" + "127.0.0.1 " + domainName);
 
 			return true;
 		}
