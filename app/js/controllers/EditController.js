@@ -16,13 +16,8 @@ app.controller('EditController', function($scope, $location, $routeParams, Domai
 
 	$scope.domain = clone(DomainsService.get($routeParams.id));
 
-	$scope.new = function() {
-		$location.path('/new');
-	};
-
 	$scope.save = function() {
 		DomainsService.update(clone($scope.domain));
-		MessageService.message('Domain saved');
 		ApacheService.restart();
 	};
 
@@ -31,18 +26,4 @@ app.controller('EditController', function($scope, $location, $routeParams, Domai
 		ApacheService.restart();
 		$location.path('/new');
 	};
-
-//	$scope.advancedView = {
-//		text: 'Advanced view',
-//		state: false
-//	};
-
-//	$scope.toggleAdvancedView = function() {
-//		$scope.advancedView.state = !$scope.advancedView.state;
-//		$scope.advancedView.text = $scope.advancedView.state ? 'Simple view' : 'Advanced view';
-//	};
-//
-//	$scope.getAdvancedView = function() {
-//	    return $scope.advancedView.state ? '' : 'hidden';
-//	}
 });
