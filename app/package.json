@@ -4,9 +4,9 @@
 	"window": {
 //		"toolbar": false,
 		"width": 800,
-		"height": 450,
-		"min_width": 800,
-		"min_height": 400,
+		"height": 366,
+		"min_width": 600,
+		"min_height": 366,
 		"position": "center",
 		"show": false
 	}
