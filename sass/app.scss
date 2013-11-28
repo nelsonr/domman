@@ -31,9 +31,11 @@ html, body {
 
 body {
 	font-family: 'SourceSansProRegular';
+	font-size: 0.9em;
 	color: $foreground-color;
 	background-color: $primary-bg-color;
 	-webkit-user-select: none;
+	overflow: hidden;
 }
 
 main {
@@ -53,7 +55,7 @@ input[type="text"] {
 }
 
 p {
-	margin-bottom: 1.2em;
+	margin-bottom: 1.1em;
 }
 
 /*------------------------------
@@ -90,6 +92,26 @@ p {
 
 .fa-trash-o:before {
 	content: "\f014";
+}
+
+.fa-plus:before {
+	content: "\f067";
+}
+
+/*------------------------------
+
+    Menu view
+
+------------------------------*/
+
+nav ul li {
+	cursor: default;
+	display: inline-block;
+	padding: 13px 10px 9px;
+	font-size: 0.9em;
+
+	&:hover { background: $base-green; }
+	&:active { background: $base-green-lighter; }
 }
 
 /*------------------------------
@@ -132,7 +154,7 @@ p {
 	max-width: 300px;
 
 	ul {
-		height: -webkit-calc(100%);
+		height: -webkit-calc(100% - 38px);
 		overflow-y: auto;
 	}
 }
@@ -232,6 +254,8 @@ form {
 
 	&:hover { background: $base-blue-light; }
 	&:active { background: $base-blue-lighter; }
+
+	.fa-plus:before { font-size: 0.9em; }
 }
 
 /*------------------------------
