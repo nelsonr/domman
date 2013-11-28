@@ -94,6 +94,10 @@ p {
 	content: "\f067";
 }
 
+.fa-chevron-right:before {
+	content: "\f054";
+}
+
 /*------------------------------
 
     Menu view
@@ -117,10 +121,10 @@ nav ul li {
 ------------------------------*/
 
 .menu-icon {
-	font-size: 2.1em;
+	font-size: 1em;
 	position: absolute;
 	right: 10px;
-	top: 0;
+	top: 10px;
 }
 
 .menu-item {
@@ -274,14 +278,6 @@ form {
 	}
 
 	&:active { background: $secondary-bg-color; }
-
-	.icon {
-		line-height: 0;
-		font-size: 2.7em;
-		position: relative;
-		margin-right: 1px;
-		top: 2px;
-	}
 }
 
 /*------------------------------
