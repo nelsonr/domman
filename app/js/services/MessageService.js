@@ -1,7 +1,7 @@
 app.factory('MessageService', function($rootScope) {
 	var service = {};
 
-	service.message = function(message) {
+	service.send = function(message) {
 		$rootScope.$broadcast('message', message);
 	};
 
