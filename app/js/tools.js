@@ -22,6 +22,3 @@ function preventFlash() {
 		clearTimeout(t);
 	}, 1000);
 }
-
-
-
