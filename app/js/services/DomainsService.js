@@ -2,20 +2,39 @@ app.factory('DomainsService', function(FileService) {
 	var	list = [],
 		service = {};
 
+	/**
+	 * Parse the httpd-vhosts.conf file and initializes the list
+	 */
 	service.load = function() {
 		var ap = require('apache-vhosts-parser');
 
 		list = ap.parse(config.vhosts_file);
 	};
 
+	/**
+	 * Get the domains list
+	 *
+	 * @returns {Array}
+	 */
 	service.list = function() {
 		return list;
 	};
 
+	/**
+	 * Get the ID of the last domain added
+	 *
+	 * @returns {number}
+	 */
 	service.getLastId = function() {
 		return list[list.length - 1]['id'];
 	};
 
+	/**
+	 * Add a new domain
+	 *
+	 * @param domain
+	 * @returns {number|string}
+	 */
 	service.add = function(domain) {
 		var id = list.length > 0 ? service.getLastId() + 1 : 0;
 		list.push({id: id, ServerName: domain.ServerName, DocumentRoot: domain.DocumentRoot});
@@ -26,6 +45,12 @@ app.factory('DomainsService', function(FileService) {
 		return id;
 	};
 
+	/**
+	 * Update domain
+	 *
+	 * @param domain
+	 * @returns {boolean}
+	 */
 	service.update = function(domain) {
 		var currentDomain = service.get(domain.id);
 
@@ -46,6 +71,12 @@ app.factory('DomainsService', function(FileService) {
 		return true;
 	};
 
+	/**
+	 * Remove domain
+	 *
+	 * @param id
+	 * @returns {boolean}
+	 */
 	service.remove = function(id) {
 	    var i = 0, length = list.length;
 		var domain = service.get(id);
@@ -63,6 +94,12 @@ app.factory('DomainsService', function(FileService) {
 		return false;
 	};
 
+	/**
+	 * Get a domain by ID
+	 *
+	 * @param id
+	 * @returns {*}
+	 */
 	service.get = function(id) {
 		var i = 0, length = list.length;
 
@@ -75,11 +112,16 @@ app.factory('DomainsService', function(FileService) {
 		return false;
 	};
 
+	// Initialize list if empty
 	if(list.length == 0) {
-		// initialize list
 		service.load();
 	}
 
+	/**
+	 * Add a new domain to httpd-vhosts.conf
+	 *
+	 * @param domain
+	 */
 	function addVhost(domain) {
 		var vhost = "\n\n<VirtualHost *>\n";
 		var attrVal = '';
@@ -87,6 +129,7 @@ app.factory('DomainsService', function(FileService) {
 		for(attr in domain) {
 			attrVal = domain[attr];
 
+			// Ensure that DocumentRoot begins and ends with a double quote
 			if(attr === 'DocumentRoot') {
 				attrVal = '"' + attrVal.replace(/"/g, '') + '"';
 			}
@@ -99,6 +142,12 @@ app.factory('DomainsService', function(FileService) {
 		FileService.append(config.vhosts_file, vhost);
 	}
 
+	/**
+	 * Update a domain in httpd-vhosts.conf
+	 *
+	 * @param currentDomain
+	 * @param domain
+	 */
 	function editVhost(currentDomain, domain) {
 		var vhostsFile = FileService.read(config.vhosts_file);
 
@@ -108,6 +157,11 @@ app.factory('DomainsService', function(FileService) {
 		FileService.write(config.vhosts_file, vhostsFile);
 	}
 
+	/**
+	 * Remove a domain from httpd-vhosts.conf
+	 *
+	 * @param domain
+	 */
 	function deleteVhost(domain) {
 		var vhostsFile = FileService.read(config.vhosts_file);
 		var domainRegex = new RegExp('<VirtualHost \\*>[\\s\\w]*' + domain.ServerName + '[\\s\\S]*?<\\/VirtualHost>');
@@ -121,6 +175,12 @@ app.factory('DomainsService', function(FileService) {
 		FileService.write(config.vhosts_file, vhostsFile);
 	}
 
+	/**
+	 * Add a domain to the hosts file
+	 *
+	 * @param domainName
+	 * @returns {boolean}
+	 */
 	function addHost(domainName) {
 		if(domainName) {
 			FileService.append(config.win_hosts_file, "\r" + "127.0.0.1 " + domainName);
@@ -131,6 +191,12 @@ app.factory('DomainsService', function(FileService) {
 		return false;
 	}
 
+	/**
+	 * Update a domain in the hosts file
+	 *
+	 * @param currentDomainName
+	 * @param domainName
+	 */
 	function editHost(currentDomainName, domainName) {
 		var hostsFile = FileService.read(config.win_hosts_file);
 		hostsFile = hostsFile.replace(currentDomainName, domainName);
@@ -138,6 +204,11 @@ app.factory('DomainsService', function(FileService) {
 		FileService.write(config.win_hosts_file, hostsFile);
 	}
 
+	/**
+	 * Remove a domain from the hosts file
+	 *
+	 * @param domain
+	 */
 	function deletHost(domain) {
 		var hostsFile = FileService.read(config.win_hosts_file);
 
