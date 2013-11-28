@@ -1,28 +1,21 @@
 <div class="edit">
     <h2>Edit domain</h2>
 
-	<!--Add domain-->
-	<div class="new" id="new" ng-click="new()">new</div>
-
     <form ng-submit="save()">
         <label>Server Name</label>
         <input type="text" ng-model="domain.ServerName" value="{{ domain.ServerName }}" placeholder="Your domain name, example: domain.dev" required autofocus />
 
         <label>Document Root</label>
-        <input type="text" ng-model="domain.DocumentRoot" value="{{ domain.DocumentRoot|quotes }}" placeholder="The path to your project folder" required />
+        <input type="text" ng-model="domain.DocumentRoot" value="{{ domain.DocumentRoot }}" placeholder="The path to your project folder" required />
 
-        <!--<div ng-click="toggleAdvancedView()">{{ advancedView.text }}</div>-->
+        <!--<label>Server Admin</label>-->
+        <!--<input type="text" ng-model="domain.ServerAdmin" value="{{ domain.ServerAdmin }}" />-->
 
-        <!--<div class="hidden" ng-class="advancedView()">-->
-            <!--<label>Server Admin</label>-->
-            <!--<input type="text" ng-model="domain.ServerAdmin" value="{{ domain.ServerAdmin }}" />-->
+        <!--<label>Server Alias</label>-->
+        <!--<input type="text" ng-model="domain.ServerAlias" value="{{ domain.ServerAlias }}" />-->
 
-            <!--<label>Server Alias</label>-->
-            <!--<input type="text" ng-model="domain.ServerAlias" value="{{ domain.ServerAlias }}" />-->
-
-            <!--<label>Custom Log</label>-->
-            <!--<input type="text" ng-model="domain.CustomLog" value="{{ domain.CustomLog }}" />-->
-        <!--</div>-->
+        <!--<label>Custom Log</label>-->
+        <!--<input type="text" ng-model="domain.CustomLog" value="{{ domain.CustomLog }}" />-->
 
         <input type="hidden" name="id" ng-model="domain.id" value="{{ domain.id }}" required />
 
@@ -44,7 +37,7 @@
 			<div class="modal-body">
 				<p>Do you want to remove this domain?</p>
 
-				<button type="button" class="btn btn-danger" ng-click="remove()">Yes</button>
+				<button type="button" class="btn btn-danger" data-dismiss="modal" ng-click="remove()">Yes</button>
 				<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
 			</div>
 		</div><!-- /.modal-content -->
