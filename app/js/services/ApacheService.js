@@ -9,8 +9,6 @@ app.factory('ApacheService', function(MessageService) {
 		MessageService.send('Apache is restarting...');
 
 		exec(apache, args, function(err, stdout, stderr) {
-			if(err) throw err;
-
 			MessageService.send('Apache is running.');
 			console.info('APACHE: ' + stderr);
 		});
