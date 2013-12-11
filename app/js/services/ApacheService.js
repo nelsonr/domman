@@ -10,7 +10,10 @@ app.factory('ApacheService', function(MessageService) {
 
 		exec(apache, args, function(err, stdout, stderr) {
 			MessageService.send('Apache is running.');
-			console.info('APACHE: ' + stderr);
+
+			if (stderr) {
+				console.info('APACHE: ' + stderr);
+			}
 		});
 	};
 
