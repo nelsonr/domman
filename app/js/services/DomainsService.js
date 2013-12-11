@@ -127,8 +127,11 @@ app.factory('DomainsService', function(FileService) {
 		for(attr in domain) {
 			attrVal = domain[attr];
 
-			// Ensure that DocumentRoot begins and ends with a double quote
 			if(attr === 'DocumentRoot') {
+				// Trailing backslash '\' breaks DocumentRoot
+				attrVal = attrVal.replace(/\\$/, '');
+
+				// Ensure that DocumentRoot begins and ends with a double quote
 				attrVal = '"' + attrVal.replace(/"/g, '') + '"';
 			}
 
@@ -148,6 +151,9 @@ app.factory('DomainsService', function(FileService) {
 	 */
 	function editVhost(currentDomain, domain) {
 		var vhostsFile = FileService.read(config.vhosts_file);
+
+		// Trailing backslash '\' breaks DocumentRoot
+		domain.DocumentRoot = domain.DocumentRoot.replace(/\\$/, '');
 
 		vhostsFile = vhostsFile.replace(currentDomain.ServerName, domain.ServerName);
 		vhostsFile = vhostsFile.replace(currentDomain.DocumentRoot, domain.DocumentRoot);
