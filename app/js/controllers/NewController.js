@@ -1,4 +1,4 @@
-app.controller('NewController', function($scope, $location, DomainsService, ApacheService, MessageService) {
+app.controller('NewController', function($scope, $location, DomainsService, ApacheService) {
 	$scope.domain = {};
 
 	$scope.save = function() {
