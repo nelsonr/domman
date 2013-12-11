@@ -40,8 +40,7 @@ body {
 
 main {
 	display: -webkit-flex;
-	height: 100%;
-	overflow: hidden;
+	height: -webkit-calc(100% - 36px);
 }
 
 ul {
@@ -147,16 +146,11 @@ nav ul li {
 }
 
 #domains-view {
+	-webkit-flex: 1;
 	background: $secondary-bg-color;
 	position: relative;
-	-webkit-flex: 1;
-	height: 100%;
 	max-width: 300px;
-
-	ul {
-		height: -webkit-calc(100% - 38px);
-		overflow-y: auto;
-	}
+	overflow-y: auto;
 }
 
 /*------------------------------
