@@ -54,21 +54,24 @@ app.factory('DomainsService', function(FileService) {
 	service.update = function(domain) {
 		var currentDomain = service.get(domain.id);
 
-		if(currentDomain !== domain) {
+		if(!equal(currentDomain, domain)) {
 			editVhost(currentDomain, domain);
 
 			if(currentDomain.ServerName !== domain.ServerName) {
 				editHost(currentDomain.ServerName, domain.ServerName);
 			}
+
+			// Update domain in the list
+			list = list.map(function(el) {
+				if(el.id === domain.id) el = domain;
+
+				return el;
+			});
+
+			return true;
 		}
 
-		list = list.map(function(el) {
-			if(el.id === domain.id) el = domain;
-
-			return el;
-		});
-
-		return true;
+		return false;
 	};
 
 	/**
@@ -111,11 +114,6 @@ app.factory('DomainsService', function(FileService) {
 
 		return false;
 	};
-
-	// Initialize list if empty
-	if(list.length == 0) {
-		service.load();
-	}
 
 	/**
 	 * Add a new domain to httpd-vhosts.conf
@@ -215,6 +213,11 @@ app.factory('DomainsService', function(FileService) {
 		hostsFile = hostsFile.replace('127.0.0.1 ' + domain.ServerName, '').trim()
 
 		FileService.write(config.win_hosts_file, hostsFile);
+	}
+
+	// Initialize list if empty
+	if(list.length == 0) {
+		service.load();
 	}
 
 	return service;

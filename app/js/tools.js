@@ -22,3 +22,11 @@ function preventFlash() {
 		clearTimeout(t);
 	}, 1000);
 }
+
+function equal(objA, objB) {
+	for (attr in objA) {
+		if (objA[attr] !== objB[attr]) return false;
+	}
+
+	return true;
+}
