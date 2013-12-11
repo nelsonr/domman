@@ -17,8 +17,9 @@ app.controller('EditController', function($scope, $location, $routeParams, Domai
 	$scope.domain = clone(DomainsService.get($routeParams.id));
 
 	$scope.save = function() {
-		DomainsService.update(clone($scope.domain));
-		ApacheService.restart();
+		if (DomainsService.update(clone($scope.domain))) {
+			ApacheService.restart();
+		}
 	};
 
 	$scope.remove = function() {
