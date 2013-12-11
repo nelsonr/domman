@@ -15,23 +15,3 @@ describe('vhostsParser', function() {
 		});
 	});
 });
-
-describe('tools', function() {
-	var tools = require('../app/js/tools.js');
-
-    describe('compareObjects()', function() {
-	    it("should return false if two objects don't match", function() {
-		    var objA = {a: 1, b: 2},
-			    objB = {a: 1, b: 3};
-
-	        assert.equal(false, tools.compareObjects(objA, objB));
-	    });
-
-	    it('should return true if two objects match', function() {
-		    var objA = {a: 1, b: 2},
-			    objB = {a: 1, b: 2};
-
-	        assert.equal(true, tools.compareObjects(objA, objB));
-	    });
-    });
-});
