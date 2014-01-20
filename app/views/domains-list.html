@@ -1,0 +1,9 @@
+<!--Domains view-->
+<section id="domains-view" ng-controller="DomainsController">
+	<!--Domains list-->
+	<ul id="domains-list">
+		<li class="menu-item"
+		    ng-repeat="domain in domains.list()"
+		    ng-click="edit(domain.id)">{{ domain.ServerName }} <span class="menu-icon"><i class="fa fa-chevron-right"></i></span></li>
+	</ul>
+</section>

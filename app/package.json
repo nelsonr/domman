@@ -3,10 +3,10 @@
 	"main": "index.html",
 	"window": {
 //		"toolbar": false,
-		"width": 800,
-		"height": 366,
-		"min_width": 600,
-		"min_height": 366,
+		"width": 400,
+		"height": 336,
+		"min_width": 400,
+		"min_height": 336,
 		"position": "center",
 		"show": false
 	}

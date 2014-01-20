@@ -9,25 +9,15 @@
 <body>
 	<!--Menu view-->
 	<nav id="menu-view" ng-controller="MenuController">
-		<ul>
-			<li ng-click="new()">New</li>
-			<li>Options</li><!--TODO: Add Options Modal-->
-			<li data-toggle="modal" data-target="#AboutModal">About</li><!--TODO: Add About Modal-->
+		<ul class="cf" ng-class="getActive()">
+			<li class="home" ng-click="goto('/home')" ng-class="isActive('/home')">Virtual Hosts</li>
+			<li class="new" ng-click="goto('/new')" ng-class="isActive('/new')">New</li>
+			<li class="options">Options</li><!--TODO: Add Options Modal-->
+			<li data-toggle="modal" data-target="#AboutModal">About</li><!--TODO: Finish About Modal-->
 		</ul>
 	</nav>
 
     <main class="container">
-
-        <!--Domains view-->
-        <section id="domains-view" ng-controller="DomainsController">
-            <!--Domains list-->
-            <ul id="domains-list">
-                <li class="menu-item"
-                    ng-repeat="domain in domains.list()"
-                    ng-class="selected(domain.id)"
-                    ng-click="edit(domain.id)">{{ domain.ServerName }} <span class="menu-icon"><i class="fa fa-chevron-right"></i></span></li>
-            </ul>
-        </section>
 
         <!--Main view-->
         <section id="main-view" ng-view></section>
@@ -72,6 +62,8 @@
     <script type="text/javascript" src="js/app.js"></script>
 
     <!--Services-->
+    <script type="text/javascript" src="js/services/VHostsService.js"></script>
+    <script type="text/javascript" src="js/services/HostsService.js"></script>
     <script type="text/javascript" src="js/services/MessageService.js"></script>
     <script type="text/javascript" src="js/services/DomainsService.js"></script>
     <script type="text/javascript" src="js/services/ApacheService.js"></script>

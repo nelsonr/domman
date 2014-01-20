@@ -4,6 +4,23 @@
 
 /*------------------------------
 
+    Clearfix
+
+------------------------------*/
+
+.cf:before,
+.cf:after {
+	content: " "; /* 1 */
+	display: table; /* 2 */
+}
+
+.cf:after {
+	clear: both;
+}
+
+
+/*------------------------------
+
     Animations
 
 ------------------------------*/
@@ -103,54 +120,30 @@ p {
 
 ------------------------------*/
 
-nav ul li {
-	cursor: default;
-	display: inline-block;
-	padding: 13px 10px 9px;
-	font-size: 0.9em;
-
-	&:hover { background: $base-green; }
-	&:active { background: $base-green-lighter; }
-}
-
-/*------------------------------
-
-    Domains list
-
-------------------------------*/
-
-.menu-icon {
-	font-size: 1em;
-	position: absolute;
-	right: 10px;
-	top: 10px;
-}
-
-.menu-item {
-	color: #CCC;
-	cursor: default;
-	line-height: 1em;
-	padding: 10px;
+nav ul {
 	position: relative;
-	white-space: nowrap;
-	-webkit-transition: padding-left 0.3s ease-in-out;
 
-	&:hover, &.selected {
-		color: #FFF;
-		font-family: "SourceSansProSemiboldItalic";
-		padding-left: 1em;
+	li {
+		cursor: default;
+		display: block;
+		float: left;
+		padding: 13px 10px 9px;
+		font-size: 0.9em;
+
+		&:hover { background: $secondary-bg-color; }
+		&:active, &.active { background: $secondary-bg-color-lighter; }
+
+		&.active:after {
+			content: '';
+			display: block;
+			position: absolute;
+			bottom: 0;
+			left: 0;
+			width: 100%;
+			height: 2px;
+			background: inherit;
+		}
 	}
-
-	&:hover { background: $base-blue; }
-	&.selected { background: $primary-bg-color; }
-}
-
-#domains-view {
-	-webkit-flex: 1;
-	background: $secondary-bg-color;
-	position: relative;
-	max-width: 300px;
-	overflow-y: auto;
 }
 
 /*------------------------------
@@ -160,12 +153,66 @@ nav ul li {
 ------------------------------*/
 
 #main-view {
-	-webkit-flex: 2;
-	overflow-y: auto;
+	-webkit-flex: 1;
+	background: $secondary-bg-color;
+	display: -webkit-flex;
 
 	& > div:first-child {
 		position: relative;
 	}
+}
+
+
+/*------------------------------
+
+    Domains view
+
+------------------------------*/
+
+#domains-view {
+	-webkit-flex: 1;
+	background: $secondary-bg-color;
+	position: relative;
+	overflow-y: auto;
+}
+
+.menu-icon {
+	font-size: 1em;
+	position: absolute;
+	right: 10px;
+	top: 13px;
+}
+
+.menu-item {
+	color: #CCC;
+	cursor: default;
+	line-height: 1em;
+	padding: 14px 10px;
+	position: relative;
+	white-space: nowrap;
+	border-bottom: 1px solid rgb(51, 51, 51);
+	-webkit-transition: padding-left 0.3s ease-in-out;
+
+	&:last-child { border-bottom: 0; }
+
+	&:hover, &.selected {
+		color: #FFF;
+	}
+
+	&:hover {
+		background: $base-blue;
+		box-shadow: inset 0 1px $base-blue-lighter;
+	}
+}
+
+/*------------------------------
+
+    Edit view
+
+------------------------------*/
+
+.edit {
+	-webkit-flex: 1;
 }
 
 /*------------------------------
@@ -178,11 +225,10 @@ h2 {
 	padding: 15px 24px 13px;
 	background: hsl(214, 30%, 34%);
 	position: relative;
-	z-index: -1;
 }
 
-.edit h2 { background: $base-blue; }
-.new h2 { background: $base-green; }
+.edit h2 { background: $base-blue-gradient; }
+.new h2 { background: $base-green-gradient; }
 
 /*------------------------------
 
@@ -193,6 +239,7 @@ h2 {
 form {
 	padding: 20px 24px;
 	font-size: 1.2em;
+	position: relative;
 
 	input, label {
 		display: block;
@@ -215,9 +262,10 @@ form {
 		margin-top: 26px;
 		width: 100px;
 		padding: 10px;
-		background: $base-blue;
-		color: $foreground-color;
 		border: none;
+		color: $foreground-color;
+		background: $base-blue-gradient;
+		box-shadow: rgba(0,0,0,.2);
 
 		&:hover { background: $base-blue-light; }
 		&:active { background: $base-blue-lighter; }
@@ -225,31 +273,10 @@ form {
 }
 
 .new form input[type="submit"] {
-	background: $base-green;
+	background: $base-green-gradient;
 
 	&:hover { background: $base-green-light; }
 	&:active { background: $base-green-lighter; }
-}
-
-/*------------------------------
-
-    New domain button
-
-------------------------------*/
-
-#new {
-	position: absolute;
-	top: 11px;
-	right: 11px;
-	color: #FFF;
-	cursor: default;
-	padding: 8px 13px;
-	text-transform: capitalize;
-
-	&:hover { background: $base-blue-light; }
-	&:active { background: $base-blue-lighter; }
-
-	.fa-plus:before { font-size: 0.9em; }
 }
 
 /*------------------------------
@@ -266,6 +293,7 @@ form {
 	padding: 10px 8px 8px 8px;
 	cursor: default;
 	color: gray;
+	font-size: 0.9em;
 
 	&:hover {
 		color: #FFF;

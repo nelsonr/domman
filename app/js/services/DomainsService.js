@@ -1,4 +1,4 @@
-app.factory('DomainsService', function(FileService) {
+app.factory('DomainsService', function(VHostsService, HostsService) {
 	var	list = [],
 		service = {};
 
@@ -21,6 +21,24 @@ app.factory('DomainsService', function(FileService) {
 	};
 
 	/**
+	 * Get a domain by ID
+	 *
+	 * @param id
+	 * @returns {*}
+	 */
+	service.get = function(id) {
+		var i = 0, length = list.length;
+
+		for(; i < length; i++) {
+			if(list[i]['id'] === parseInt(id)) {
+				return list[i];
+			}
+		}
+
+		return false;
+	};
+
+	/**
 	 * Get the ID of the last domain added
 	 *
 	 * @returns {number}
@@ -37,10 +55,10 @@ app.factory('DomainsService', function(FileService) {
 	 */
 	service.add = function(domain) {
 		var id = list.length > 0 ? service.getLastId() + 1 : 0;
-		list.push({id: id, ServerName: domain.ServerName, DocumentRoot: domain.DocumentRoot});
 
-		addVhost(domain);
-		addHost(domain.ServerName);
+		list.push({id: id, ServerName: domain.ServerName, DocumentRoot: domain.DocumentRoot});
+		VHostsService.add(domain);
+		HostsService.add(domain.ServerName);
 
 		return id;
 	};
@@ -55,10 +73,10 @@ app.factory('DomainsService', function(FileService) {
 		var currentDomain = service.get(domain.id);
 
 		if(!equal(currentDomain, domain)) {
-			editVhost(currentDomain, domain);
+			VHostsService.edit(currentDomain, domain);
 
 			if(currentDomain.ServerName !== domain.ServerName) {
-				editHost(currentDomain.ServerName, domain.ServerName);
+				HostsService.edit(currentDomain.ServerName, domain.ServerName);
 			}
 
 			// Update domain in the list
@@ -87,8 +105,8 @@ app.factory('DomainsService', function(FileService) {
 		for(; i < length; i++) {
 			if(list[i]['id'] === id) {
 				list.splice(i, 1);
-				deleteVhost(domain);
-				deletHost(domain);
+				VHostsService.remove(domain);
+				HostsService.remove(domain);
 
 				return true;
 			}
@@ -96,130 +114,6 @@ app.factory('DomainsService', function(FileService) {
 
 		return false;
 	};
-
-	/**
-	 * Get a domain by ID
-	 *
-	 * @param id
-	 * @returns {*}
-	 */
-	service.get = function(id) {
-		var i = 0, length = list.length;
-
-		for(; i < length; i++) {
-			if(list[i]['id'] === parseInt(id)) {
-				return list[i];
-			}
-		}
-
-		return false;
-	};
-
-	/**
-	 * Add a new domain to httpd-vhosts.conf
-	 *
-	 * @param domain
-	 */
-	function addVhost(domain) {
-		var vhost = "\n\n<VirtualHost *>\n";
-		var attrVal = '';
-
-		for(attr in domain) {
-			attrVal = domain[attr];
-
-			if(attr === 'DocumentRoot') {
-				// Trailing backslash '\' breaks DocumentRoot
-				attrVal = attrVal.replace(/\\$/, '');
-
-				// Ensure that DocumentRoot begins and ends with a double quote
-				attrVal = '"' + attrVal.replace(/"/g, '') + '"';
-			}
-
-			vhost += "\t" + attr + ' ' + attrVal + "\n";
-		}
-
-		vhost += "</VirtualHost>";
-
-		FileService.append(config.vhosts_file, vhost);
-	}
-
-	/**
-	 * Update a domain in httpd-vhosts.conf
-	 *
-	 * @param currentDomain
-	 * @param domain
-	 */
-	function editVhost(currentDomain, domain) {
-		var vhostsFile = FileService.read(config.vhosts_file);
-
-		// Trailing backslash '\' breaks DocumentRoot
-		domain.DocumentRoot = domain.DocumentRoot.replace(/\\$/, '');
-
-		vhostsFile = vhostsFile.replace(currentDomain.ServerName, domain.ServerName);
-		vhostsFile = vhostsFile.replace(currentDomain.DocumentRoot, domain.DocumentRoot);
-
-		FileService.write(config.vhosts_file, vhostsFile);
-	}
-
-	/**
-	 * Remove a domain from httpd-vhosts.conf
-	 *
-	 * @param domain
-	 */
-	function deleteVhost(domain) {
-		var vhostsFile = FileService.read(config.vhosts_file);
-		var domainRegex = new RegExp('<VirtualHost \\*>[\\s\\w]*' + domain.ServerName + '[\\s\\S]*?<\\/VirtualHost>');
-
-		// remove domain
-		vhostsFile = vhostsFile.replace(domainRegex, '');
-
-		// tidy vhost file
-		vhostsFile = vhostsFile.replace('\n\n\n', '\n').trim();
-
-		FileService.write(config.vhosts_file, vhostsFile);
-	}
-
-	/**
-	 * Add a domain to the hosts file
-	 *
-	 * @param domainName
-	 * @returns {boolean}
-	 */
-	function addHost(domainName) {
-		if(domainName) {
-			FileService.append(config.win_hosts_file, "\n" + "127.0.0.1 " + domainName);
-
-			return true;
-		}
-
-		return false;
-	}
-
-	/**
-	 * Update a domain in the hosts file
-	 *
-	 * @param currentDomainName
-	 * @param domainName
-	 */
-	function editHost(currentDomainName, domainName) {
-		var hostsFile = FileService.read(config.win_hosts_file);
-		hostsFile = hostsFile.replace(currentDomainName, domainName);
-
-		FileService.write(config.win_hosts_file, hostsFile);
-	}
-
-	/**
-	 * Remove a domain from the hosts file
-	 *
-	 * @param domain
-	 */
-	function deletHost(domain) {
-		var hostsFile = FileService.read(config.win_hosts_file);
-
-		hostsFile = hostsFile.replace('127.0.0.1 ' + domain.ServerName, '').trim()
-
-		FileService.write(config.win_hosts_file, hostsFile);
-	}
 
 	// Initialize list if empty
 	if(list.length == 0) {
