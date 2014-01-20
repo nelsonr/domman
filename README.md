@@ -1,7 +1,7 @@
 Domman - Virtual Hosts Manager
 ======
 
-![Edit](http://i.imgur.com/R1BR9hn.png)
+![Edit](http://i.imgur.com/NOWIf8v.png)
 
 ## What?
 
